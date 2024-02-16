@@ -1,0 +1,247 @@
+services:
+# DATABASE
+  database:
+    image: postgres:16
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER:     ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PW}
+      POSTGRES_DB:       ${POSTGRES_DB}
+    volumes:
+      - ${POSTGRES_DATA}:/var/lib/postgresql/data
+      - ${APP_DIR}/database/locations.csv:/tmp/locations.csv
+      - ${APP_DIR}/database/feeds.csv:/tmp/feeds.csv
+    networks:
+      - backend
+
+  init-database:
+    # lightweight container to run init scripts (bash/python) for db
+    # creates schema / table structure (if db doesn't already exist)
+    build:
+      context: ${APP_DIR}/database
+      dockerfile: init.dockerfile
+    environment:
+      PGUSER:     ${POSTGRES_USER}
+      PGPASSWORD: ${POSTGRES_PW}
+      PGDATABASE: ${POSTGRES_DB}
+      PGPORT:     5432
+      PGHOST:     database
+      PGSCHEMA:   ${POSTGRES_SCHEMA}
+    depends_on:
+      - database
+    networks:
+      - backend
+
+# QUEUE
+  queue:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_LOG:          ${RABBITMQ_LOG}
+    networks:
+      - backend
+    volumes:
+      - queue-data:/var/lib/rabbitmq
+
+# PROCESSING PIPELINE
+  ingest:
+    build:
+      context: ${APP_DIR}/pipeline/ingest/py
+      dockerfile: ingest.dockerfile
+    environment:
+      API_HOST: api
+      API_PORT: ${API_PORT}
+      QUEUE_HOST: queue
+      QUEUE_USER: ${RABBITMQ_DEFAULT_USER}
+      QUEUE_PASS: ${RABBITMQ_DEFAULT_PASS}
+    depends_on:
+      queue:
+        condition: service_started
+      api:
+        condition: service_healthy
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - ${CONF_FILE}:/opt/app/config.yaml
+      - ${APP_DIR}/utilities:/opt/app/utilities
+
+  keyword:
+    build:
+      context: ${APP_DIR}/pipeline/keyword
+      dockerfile: keyword.dockerfile
+    environment:
+      QUEUE_HOST: queue
+      QUEUE_USER: ${RABBITMQ_DEFAULT_USER}
+      QUEUE_PASS: ${RABBITMQ_DEFAULT_PASS}
+    depends_on:
+      - queue
+    networks:
+      - backend
+    volumes:
+      - ${CONF_FILE}:/opt/app/config.yaml
+      - ${APP_DIR}/utilities:/opt/app/utilities
+
+  entity:
+    build:
+      context: ${APP_DIR}/pipeline/entity
+      dockerfile: entity.dockerfile
+    environment:
+      QUEUE_HOST: queue
+      QUEUE_USER: ${RABBITMQ_DEFAULT_USER}
+      QUEUE_PASS: ${RABBITMQ_DEFAULT_PASS}
+    depends_on:
+      - queue
+    networks:
+      - backend
+    volumes:
+      - ${CONF_FILE}:/opt/app/config.yaml
+      - ${APP_DIR}/utilities:/opt/app/utilities
+
+  cve:
+    build:
+      context: ${APP_DIR}/pipeline/cve
+      dockerfile: cve.dockerfile
+    environment:
+      QUEUE_HOST: queue
+      QUEUE_USER: ${RABBITMQ_DEFAULT_USER}
+      QUEUE_PASS: ${RABBITMQ_DEFAULT_PASS}
+    depends_on:
+      - queue
+    networks:
+      - backend
+    volumes:
+      - ${CONF_FILE}:/opt/app/config.yaml
+      - ${APP_DIR}/utilities:/opt/app/utilities
+
+  post-process:
+    build:
+      context: ${APP_DIR}/pipeline/post-process
+      dockerfile: post-process.dockerfile
+    environment:
+      QUEUE_HOST: queue
+      QUEUE_USER: ${RABBITMQ_DEFAULT_USER}
+      QUEUE_PASS: ${RABBITMQ_DEFAULT_PASS}
+    depends_on:
+      - queue
+    networks:
+      - backend
+    volumes:
+      - ${CONF_FILE}:/opt/app/config.yaml
+      - ${APP_DIR}/utilities:/opt/app/utilities
+
+  load:
+    build:
+      context: ${APP_DIR}/pipeline/load
+      dockerfile: load.dockerfile
+    environment:
+      QUEUE_HOST: queue
+      API_HOST: api
+      API_PORT: ${API_PORT}
+      QUEUE_USER: ${RABBITMQ_DEFAULT_USER}
+      QUEUE_PASS: ${RABBITMQ_DEFAULT_PASS}
+    depends_on:
+      queue:
+        condition: service_started
+      api:
+        condition: service_healthy
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - ${CONF_FILE}:/opt/app/config.yaml
+      - ${APP_DIR}/utilities:/opt/app/utilities
+
+# API
+  api:
+    build:
+      context: ${APP_DIR}/api
+      dockerfile: api.dockerfile
+    restart: unless-stopped
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${API_PORT}/ping"]
+      interval: 3m
+      start_interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 1m
+    environment:
+      API_HOST: localhost
+      API_PORT: ${API_PORT}
+      DB_HOST: database
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASS: ${POSTGRES_PW}
+      SCHEMA: ${POSTGRES_SCHEMA}
+      QUEUE_HOST: queue
+      QUEUE_USER: ${RABBITMQ_DEFAULT_USER}
+      QUEUE_PASS: ${RABBITMQ_DEFAULT_PASS}
+      FLASK_ENV: development
+    depends_on:
+      - database
+      - queue
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - ${CONF_FILE}:/opt/app/config.yaml
+      - ${APP_DIR}/utilities:/opt/app/utilities
+
+  scheduler:
+    build:
+      context: ${APP_DIR}/scheduler
+      dockerfile: scheduler.dockerfile
+    environment:
+      API_HOST: api
+      API_PORT: ${API_PORT}
+    depends_on:
+      database:
+        condition: service_started
+      queue:
+        condition: service_started
+      api:
+        condition: service_healthy
+    networks:
+      - backend
+    volumes:
+      - ${CONF_FILE}:/opt/app/config.yaml
+      - ${APP_DIR}/utilities:/opt/app/utilities
+
+# GUI
+  grafana:
+    build:
+      context: ${APP_DIR}/grafana
+      dockerfile: grafana.dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - '3000:3000'
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PW: ${POSTGRES_PW}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PW}
+      GF_LOG_LEVEL: warn
+    depends_on:
+      api:
+        condition: service_healthy
+      database:
+        condition: service_started
+    networks:
+      - frontend
+      - backend
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  queue-data:

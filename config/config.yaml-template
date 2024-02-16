@@ -1,0 +1,230 @@
+global:
+  logging:
+    level: "INFO"  # global log level
+    suppress_root: false    # debug tool - suppress log output (up to WARN) except for custom log statements
+  message-queue-delay: 30      # delay before clients try to connect to message queue (in seconds)
+
+pipeline:
+  ingest:
+    force: false # parse all entries including those with pub_dates older than feed.updated
+    routing:
+    # in:   STATIC (ingest channel)
+      out:  keyword
+  keyword:
+    routing:
+      in:   keyword
+      out:  entity
+    manual:   # manual keyword extraction via user-defined dictionary
+      enabled: true
+      capture-groups:
+       #os / programming languages / tools
+        - Python
+        - Windows
+        - Linux
+        - Java
+        - Android
+        - iOS
+        - Docker
+        - Kubernetes
+        - AWS
+        - Azure
+        - VMware
+        - macOS
+       #general tags
+        - Phishing
+        - Smishing
+        - Vishing
+        - "Spear Phishing"
+        - Whaling
+        - Malware
+        - Adware
+        - Spyware
+        - Ransomware
+        - Virus
+        - Worm
+        - Trojan
+        - Botnet
+        - Rootkit
+        - Keylogger:
+            patterns:
+              - "keylog"
+        - "Session Hijack"
+        - "SQL Injection":
+            patterns:
+              - "sql inject"
+        - Cryptojacking:
+            patterns:
+              - "cryptojack"
+        - "DNS Tunneling":
+            patterns:
+              - "dns tunnel"
+        - "Supply Chain Attack"
+        - APT:
+            patterns:
+              - "advanced persistent threat"
+        - Vulnerability:
+            patterns:
+              - vuln
+        - KEV:
+            patterns:
+              - "known exploited vulnerability"
+        - Policy
+        - Disclosure
+        - XSS:
+            patterns:
+              - "cross-site script"
+              - "cross site script"
+        - "Zero Day":
+            patterns:
+              - "zero-day"
+              - "0day"
+              - "0 day"
+              - "0-day"
+        - DDoS:
+            patterns:
+              - "distributed denial of service"
+              - "distributed-denial-of-service"
+        - DoS:
+            patterns:
+              - "denial of service"
+              - "denial-of-service"
+        - MitM:
+            patterns:
+              - "man in the middle"
+              - "man-in-the-middle"
+              - "on-path attack"
+        - Deepfake:
+            patterns:
+              - "deep fake"
+        - "Dark Web":
+            patterns:
+              - "darkweb"
+    auto:     # automatic keyword extraction using NLP techniques / libraries
+      enabled: true
+      steps:
+        yake: # automatic keyword extraction using YAKE library
+          enabled: true
+          max-ngram-size:    3
+          deduplication-th:  0.9
+          keys-per-ngram:    5    # keys parsed per ngram group
+          max-total-keys:    10   # total number of keys allowed
+          weight-cutoffs:          # closer to zero = generally higher confidence   
+            - 0.015
+            - 0.09
+            - 0.005
+  entity:
+    routing:
+      in:   entity
+      out:  cve
+    manual: # manual entity extraction via user-defined dictionary
+      enabled: true
+      capture-groups:
+       #companies
+        - Microsoft
+        - Google
+        - Apple
+        - Amazon
+        - IBM
+        - Cisco
+        - Oracle
+        - Huawei
+        - Dell
+        - Fireeye
+        - Kaspersky
+        - "Trend Micro"
+        - Fortinet
+        - Meta:
+            patterns:
+              - Facebook
+        - Twitter:
+            patterns:
+              - X
+        - Mimecast
+        - CrowdStrike
+        - Rapid7
+        - "Palo Alto"
+        - Okta
+        - Cloudflare
+       #organizations
+        - CISA:
+            patterns:
+              - "Cybersecurity and Infrastructure Security Agency"
+        - FBI:
+            patterns:
+              - "Federal Bureau of Investigation"
+        - NSA:
+            patterns:
+              - "National Security Agency"
+        - OWASP:
+            patterns:
+              - "Open Source Foundation for Application Security"
+        - CSA:
+            patterns:
+             - "Cloud Security Alliance"
+        - CIS:
+            patterns:
+              - Centre for Internet Security
+              - Center for Internet Security
+    auto:   # automatic entity recognition via NER (NLP)
+      enabled: true
+      steps:
+        spaCy:
+          enabled: true
+          model: en_core_web_lg
+          labels:
+            - ORG
+            - PRODUCT
+  cve:
+    routing:
+      in:   cve
+      out:  postprocess
+    enabled: true # simple regex search to extract CVEs
+  post-process:
+    routing:
+      in:   postprocess
+      out:  load
+    remove_cves:
+      enabled: true
+    deduplicate:
+      enabled: true
+      steps:
+        rapidfuzz:
+          enabled: true
+          threshold: 80
+  load: 
+    post-delay: 0.25
+
+other:
+  api: 
+    database_defs:
+      feeds:
+        required:
+          - id
+          - name
+          - url
+        optional:
+          - type
+          - location
+          - status
+          - deep_parse_enabled
+          - content_perimeter
+          - title_field
+          - text_fields
+      entries:
+        required:
+          - id
+          - title
+          - summary
+          - feed
+        optional:
+          - link
+          - pub_date
+          - entities
+          - keywords
+          - vulns
+          - full_text
+  scheduler:
+    refresh:
+      enabled:        true   # automatic feed refresh enabled?
+      interval:       5       # how often feeds are refreshed (in minutes)
+      initial-delay:  60      # delay before scheduler's initial refresh (in seconds)

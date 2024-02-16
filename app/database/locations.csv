@@ -1,0 +1,246 @@
+id,name,latitude,longitude
+AFG,Afghanistan,33.00,65.00
+ALB,Albania,41.00,20.00
+DZA,Algeria,28.00,3.00
+ASM,American Samoa,-14.33,-170.00
+AND,Andorra,42.50,1.60
+AGO,Angola,-12.50,18.50
+AIA,Anguilla,18.25,-63.17
+ATA,Antarctica,-90.00,0.00
+ATG,Antigua and Barbuda,17.05,-61.80
+ARG,Argentina,-34.00,-64.00
+ARM,Armenia,40.00,45.00
+ABW,Aruba,12.50,-69.97
+AUS,Australia,-27.00,133.00
+AUT,Austria,47.33,13.33
+AZE,Azerbaijan,40.50,47.50
+BHS,Bahamas,24.25,-76.00
+BHR,Bahrain,26.00,50.55
+BGD,Bangladesh,24.00,90.00
+BRB,Barbados,13.17,-59.53
+BLR,Belarus,53.00,28.00
+BEL,Belgium,50.83,4.00
+BLZ,Belize,17.25,-88.75
+BEN,Benin,9.50,2.25
+BMU,Bermuda,32.33,-64.75
+BTN,Bhutan,27.50,90.50
+BOL,Bolivia,-17.00,-65.00
+BIH,Bosnia and Herzegovina,44.00,18.00
+BWA,Botswana,-22.00,24.00
+BVT,Bouvet Island,-54.43,3.40
+BRA,Brazil,-10.00,-55.00
+IOT,British Indian Ocean Territory,-6.00,71.50
+BRN,Brunei,4.50,114.67
+BGR,Bulgaria,43.00,25.00
+BFA,Burkina Faso,13.00,-2.00
+BDI,Burundi,-3.50,30.00
+KHM,Cambodia,13.00,105.00
+CMR,Cameroon,6.00,12.00
+CAN,Canada,60.00,-95.00
+CPV,Cape Verde,16.00,-24.00
+CYM,Cayman Islands,19.50,-80.50
+CAF,Central African Republic,7.00,21.00
+TCD,Chad,15.00,19.00
+CHL,Chile,-30.00,-71.00
+CHN,China,35.00,105.00
+CXR,Christmas Island,-10.50,105.67
+CCK,Cocos (Keeling) Islands,-12.50,96.83
+COL,Colombia,4.00,-72.00
+COM,Comoros,-12.17,44.25
+COG,Congo,-1.00,15.00
+COD,Congo,0.00,25.00
+COK,Cook Islands,-21.23,-159.77
+CRI,Costa Rica,10.00,-84.00
+CIV,Ivory Coast,8.00,-5.00
+HRV,Croatia,45.17,15.50
+CUB,Cuba,21.50,-80.00
+CYP,Cyprus,35.00,33.00
+CZE,Czech Republic,49.75,15.50
+DNK,Denmark,56.00,10.00
+DJI,Djibouti,11.50,43.00
+DMA,Dominica,15.42,-61.33
+DOM,Dominican Republic,19.00,-70.67
+ECU,Ecuador,-2.00,-77.50
+EGY,Egypt,27.00,30.00
+SLV,El Salvador,13.83,-88.92
+GNQ,Equatorial Guinea,2.00,10.00
+ERI,Eritrea,15.00,39.00
+EST,Estonia,59.00,26.00
+ETH,Ethiopia,8.00,38.00
+FLK,Falkland Islands (Malvinas),-51.75,-59.00
+FRO,Faroe Islands,62.00,-7.00
+FJI,Fiji,-18.00,175.00
+FIN,Finland,64.00,26.00
+FRA,France,46.00,2.00
+GUF,French Guiana,4.00,-53.00
+PYF,French Polynesia,-15.00,-140.00
+ATF,French Southern Territories,-43.00,67.00
+GAB,Gabon,-1.00,11.75
+GMB,Gambia,13.47,-16.57
+GEO,Georgia,42.00,43.50
+DEU,Germany,51.00,9.00
+GHA,Ghana,8.00,-2.00
+GIB,Gibraltar,36.18,-5.37
+GRC,Greece,39.00,22.00
+GRL,Greenland,72.00,-40.00
+GRD,Grenada,12.12,-61.67
+GLP,Guadeloupe,16.25,-61.58
+GUM,Guam,13.47,144.78
+GTM,Guatemala,15.50,-90.25
+GGY,Guernsey,49.50,-2.56
+GIN,Guinea,11.00,-10.00
+GNB,Guinea-Bissau,12.00,-15.00
+GUY,Guyana,5.00,-59.00
+HTI,Haiti,19.00,-72.42
+HMD,Heard Island and McDonald Islands,-53.10,72.52
+VAT,Holy See (Vatican City State),41.90,12.45
+HND,Honduras,15.00,-86.50
+HKG,Hong Kong,22.25,114.17
+HUN,Hungary,47.00,20.00
+ISL,Iceland,65.00,-18.00
+IND,India,20.00,77.00
+IDN,Indonesia,-5.00,120.00
+IRN,Iran,32.00,53.00
+IRQ,Iraq,33.00,44.00
+IRL,Ireland,53.00,-8.00
+IMN,Isle of Man,54.23,-4.55
+ISR,Israel,31.50,34.75
+ITA,Italy,42.83,12.83
+JAM,Jamaica,18.25,-77.50
+JPN,Japan,36.00,138.00
+JEY,Jersey,49.21,-2.13
+JOR,Jordan,31.00,36.00
+KAZ,Kazakhstan,48.00,68.00
+KEN,Kenya,1.00,38.00
+KIR,Kiribati,1.42,173.00
+PRK,Korea,40.00,127.00
+KOR,South Korea,37.00,127.50
+KWT,Kuwait,29.34,47.66
+KGZ,Kyrgyzstan,41.00,75.00
+LAO,Lao People's Democratic Republic,18.00,105.00
+LVA,Latvia,57.00,25.00
+LBN,Lebanon,33.83,35.83
+LSO,Lesotho,-29.50,28.50
+LBR,Liberia,6.50,-9.50
+LBY,Libya,25.00,17.00
+LIE,Liechtenstein,47.17,9.53
+LTU,Lithuania,56.00,24.00
+LUX,Luxembourg,49.75,6.17
+MAC,Macao,22.17,113.55
+MKD,Macedonia,41.83,22.00
+MDG,Madagascar,-20.00,47.00
+MWI,Malawi,-13.50,34.00
+MYS,Malaysia,2.50,112.50
+MDV,Maldives,3.25,73.00
+MLI,Mali,17.00,-4.00
+MLT,Malta,35.83,14.58
+MHL,Marshall Islands,9.00,168.00
+MTQ,Martinique,14.67,-61.00
+MRT,Mauritania,20.00,-12.00
+MUS,Mauritius,-20.28,57.55
+MYT,Mayotte,-12.83,45.17
+MEX,Mexico,23.00,-102.00
+FSM,Micronesia,6.92,158.25
+MDA,Moldova,47.00,29.00
+MCO,Monaco,43.73,7.40
+MNG,Mongolia,46.00,105.00
+MNE,Montenegro,42.00,19.00
+MSR,Montserrat,16.75,-62.20
+MAR,Morocco,32.00,-5.00
+MOZ,Mozambique,-18.25,35.00
+MMR,Myanmar,22.00,98.00
+NAM,Namibia,-22.00,17.00
+NRU,Nauru,-0.53,166.92
+NPL,Nepal,28.00,84.00
+NLD,Netherlands,52.50,5.75
+ANT,Netherlands Antilles,12.25,-68.75
+NCL,New Caledonia,-21.50,165.50
+NZL,New Zealand,-41.00,174.00
+NIC,Nicaragua,13.00,-85.00
+NER,Niger,16.00,8.00
+NGA,Nigeria,10.00,8.00
+NIU,Niue,-19.03,-169.87
+NFK,Norfolk Island,-29.03,167.95
+MNP,Northern Mariana Islands,15.20,145.75
+NOR,Norway,62.00,10.00
+OMN,Oman,21.00,57.00
+PAK,Pakistan,30.00,70.00
+PLW,Palau,7.50,134.50
+PSE,Palestinian Territory,32.00,35.25
+PAN,Panama,9.00,-80.00
+PNG,Papua New Guinea,-6.00,147.00
+PRY,Paraguay,-23.00,-58.00
+PER,Peru,-10.00,-76.00
+PHL,Philippines,13.00,122.00
+PCN,Pitcairn,-24.70,-127.40
+POL,Poland,52.00,20.00
+PRT,Portugal,39.50,-8.00
+PRI,Puerto Rico,18.25,-66.50
+QAT,Qatar,25.50,51.25
+REU,Réunion,-21.10,55.60
+ROU,Romania,46.00,25.00
+RUS,Russia,60.00,100.00
+RWA,Rwanda,-2.00,30.00
+SHN,Saint Helena,-15.93,-5.70
+KNA,Saint Kitts and Nevis,17.33,-62.75
+LCA,Saint Lucia,13.88,-61.13
+SPM,Saint Pierre and Miquelon,46.83,-56.33
+VCT,Saint Vincent and the Grenadines,13.25,-61.20
+WSM,Samoa,-13.58,-172.33
+SMR,San Marino,43.77,12.42
+STP,Sao Tome and Principe,1.00,7.00
+SAU,Saudi Arabia,25.00,45.00
+SEN,Senegal,14.00,-14.00
+SRB,Serbia,44.00,21.00
+SYC,Seychelles,-4.58,55.67
+SLE,Sierra Leone,8.50,-11.50
+SGP,Singapore,1.37,103.80
+SVK,Slovakia,48.67,19.50
+SVN,Slovenia,46.00,15.00
+SLB,Solomon Islands,-8.00,159.00
+SOM,Somalia,10.00,49.00
+ZAF,South Africa,-29.00,24.00
+SGS,South Georgia and the South Sandwich Islands,-54.50,-37.00
+SSD,South Sudan,8.00,30.00
+ESP,Spain,40.00,-4.00
+LKA,Sri Lanka,7.00,81.00
+SDN,Sudan,15.00,30.00
+SUR,Suriname,4.00,-56.00
+SJM,Svalbard and Jan Mayen,78.00,20.00
+SWZ,Swaziland,-26.50,31.50
+SWE,Sweden,62.00,15.00
+CHE,Switzerland,47.00,8.00
+SYR,Syrian Arab Republic,35.00,38.00
+TWN,Taiwan,23.50,121.00
+TJK,Tajikistan,39.00,71.00
+TZA,Tanzania,-6.00,35.00
+THA,Thailand,15.00,100.00
+TLS,Timor-Leste,-8.55,125.52
+TGO,Togo,8.00,1.17
+TKL,Tokelau,-9.00,-172.00
+TON,Tonga,-20.00,-175.00
+TTO,Trinidad and Tobago,11.00,-61.00
+TUN,Tunisia,34.00,9.00
+TUR,Turkey,39.00,35.00
+TKM,Turkmenistan,40.00,60.00
+TCA,Turks and Caicos Islands,21.75,-71.58
+TUV,Tuvalu,-8.00,178.00
+UGA,Uganda,1.00,32.00
+UKR,Ukraine,49.00,32.00
+ARE,United Arab Emirates,24.00,54.00
+GBR,United Kingdom,54.00,-2.00
+USA,United States,38.00,-97.00
+UMI,United States Minor Outlying Islands,19.28,166.60
+URY,Uruguay,-33.00,-56.00
+UZB,Uzbekistan,41.00,64.00
+VUT,Vanuatu,-16.00,167.00
+VEN,Venezuela,8.00,-66.00
+VNM,Vietnam,16.00,106.00
+VGB,Virgin Islands,18.50,-64.50
+VIR,Virgin Islands,18.33,-64.83
+WLF,Wallis and Futuna,-13.30,-176.20
+ESH,Western Sahara,24.50,-13.00
+YEM,Yemen,15.00,48.00
+ZMB,Zambia,-15.00,30.00
+ZWE,Zimbabwe,-20.00,30.00
+???,Undefined,0,0
