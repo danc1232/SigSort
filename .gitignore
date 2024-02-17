@@ -1,0 +1,6 @@
+db_data/
+development/
+.env
+**config.yaml
+__pycache__
+**/postgres-datasource.yaml
